@@ -8,6 +8,6 @@ type IntResponse struct {
 	Number int64 `json:"num"`
 }
 
-type ErrorResponse struct {
+type MessageResponse struct {
 	Message string `json:"msg"`
 }

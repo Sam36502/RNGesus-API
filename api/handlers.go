@@ -14,6 +14,7 @@ import (
 const (
 	PARAM_INT_BASE        = 10
 	PARAM_INT_BITS        = 64
+	PARAM_FLOAT_BITS      = 64
 	PARAM_INT_MIN_DEFAULT = math.MinInt64
 	PARAM_INT_MAX_DEFAULT = math.MaxInt64
 	FAILURE_STATUS        = 666
@@ -24,7 +25,7 @@ func getRandomFloat(c echo.Context) error {
 	if err != nil {
 		return c.JSON(
 			FAILURE_STATUS,
-			dto.ErrorResponse{
+			dto.MessageResponse{
 				Message: err.Error(),
 			},
 		)
@@ -50,8 +51,8 @@ func getRandomInt(c echo.Context) error {
 		if err != nil {
 			return c.JSON(
 				http.StatusBadRequest,
-				dto.ErrorResponse{
-					Message: fmt.Sprintf("Error: Invalid `min` parameter ('%s') provided:\n%s", minStr, err.Error()),
+				dto.MessageResponse{
+					Message: fmt.Sprintf("Error: Invalid `min` parameter ('%s') provided: %s", minStr, err.Error()),
 				},
 			)
 		}
@@ -66,8 +67,8 @@ func getRandomInt(c echo.Context) error {
 		if err != nil {
 			return c.JSON(
 				http.StatusBadRequest,
-				dto.ErrorResponse{
-					Message: fmt.Sprintf("Error: Invalid `max` parameter ('%s') provided:\n%s", maxStr, err.Error()),
+				dto.MessageResponse{
+					Message: fmt.Sprintf("Error: Invalid `max` parameter ('%s') provided: %s", maxStr, err.Error()),
 				},
 			)
 		}
@@ -77,7 +78,7 @@ func getRandomInt(c echo.Context) error {
 	if err != nil {
 		return c.JSON(
 			FAILURE_STATUS,
-			dto.ErrorResponse{
+			dto.MessageResponse{
 				Message: err.Error(),
 			},
 		)
@@ -85,5 +86,31 @@ func getRandomInt(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, dto.IntResponse{
 		Number: num,
+	})
+}
+
+func prayForFloat(c echo.Context) error {
+
+	// Get range parameters
+	numStr := c.QueryParam(dto.PARAM_PRAYER)
+
+	// Parse minimum parameter
+	var err error
+	var num float64
+	num, err = strconv.ParseFloat(numStr, PARAM_FLOAT_BITS)
+	if err != nil {
+		return c.JSON(
+			http.StatusBadRequest,
+			dto.MessageResponse{
+				Message: fmt.Sprintf("Error: Invalid `num` parameter ('%s') provided: %s", numStr, err.Error()),
+			},
+		)
+	}
+
+	// Tell the monks to start praying
+	divinity.PrayForFloat(num)
+
+	return c.JSON(http.StatusOK, dto.MessageResponse{
+		Message: fmt.Sprintf("The monks are praying hard for '%f', Amen.", num),
 	})
 }

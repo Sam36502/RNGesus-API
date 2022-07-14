@@ -17,5 +17,6 @@ func registerEndpoints(e *echo.Echo) {
 
 	e.GET("/v1/rand/float", getRandomFloat)
 	e.GET("/v1/rand/int", getRandomInt)
+	e.PUT("/v1/pray/float", prayForFloat)
 
 }
