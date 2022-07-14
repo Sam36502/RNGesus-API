@@ -4,6 +4,20 @@ One day, whilst at work, I was inspired to create the
 holiest of random number generators which would allow
 programmers to let God gently guide their systems.
 
+## Features
+The RNG is actually just the default Golang RNG, but it's
+seeded using The Hand of God™, this means that, if he so desires,
+God can change how your program runs to his whims. (Loosely
+based on the genius works of Terry A. Davis.)
+
+Of course, God is also attentive to our interests and so
+you can pray to increase the likelihood of a specific
+number arising. Of course, regular prayer is likely to be
+drowned out by the unwashed masses, so we offer our customers
+a prime service: we ~~bribed~~ hired a small monastery in
+Jerusalem to all pray for whatever numbers you send them, so
+by using the `/pray` endpoints, your prayers will be amplified.
+
 ## Usage
 ### Server / API
 
