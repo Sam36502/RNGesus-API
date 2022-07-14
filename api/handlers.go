@@ -17,14 +17,13 @@ const (
 	PARAM_FLOAT_BITS      = 64
 	PARAM_INT_MIN_DEFAULT = math.MinInt64
 	PARAM_INT_MAX_DEFAULT = math.MaxInt64
-	FAILURE_STATUS        = 666
 )
 
 func getRandomFloat(c echo.Context) error {
 	num, err := divinity.RandomFloat()
 	if err != nil {
 		return c.JSON(
-			FAILURE_STATUS,
+			dto.STATUS_FAIL,
 			dto.MessageResponse{
 				Message: err.Error(),
 			},
@@ -77,7 +76,7 @@ func getRandomInt(c echo.Context) error {
 	num, err := divinity.RandomInt(min, max)
 	if err != nil {
 		return c.JSON(
-			FAILURE_STATUS,
+			dto.STATUS_FAIL,
 			dto.MessageResponse{
 				Message: err.Error(),
 			},
